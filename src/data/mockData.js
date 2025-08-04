@@ -48,168 +48,117 @@ export const payoutData = {
   }
 };
 
-// To Do List Data Structure
+// To Do List Data Structure - CLEAN & SIMPLE
 export const todoCategories = [
   {
     id: "review-confirm",
-    title: "Review & Confirm",
-    icon: "📋",
-    status: "attention", // attention, completed, pending
+    title: "Review & Confirm Deal",
+    icon: "🎯",
+    status: "attention",
     urgency: "high",
-    description: "Review and confirm your settlement details",
+    description: "Review and finalize your settlement transaction",
     items: [
       {
-        id: "disclosure-sent",
-        title: "Disclosures Sent",
+        id: "disclosure-review",
+        title: "Review Disclosure Documents",
         status: "completed",
         dueDate: null,
         completedDate: "2024-01-15",
-        details: "Required disclosure documents have been sent and reviewed"
+        description: "Required disclosure documents reviewed and confirmed",
+        actionType: "navigate",
+        actionTarget: "court"
+      },
+      {
+        id: "offer-confirmation",
+        title: "Confirm Current Offer",
+        status: "completed",
+        dueDate: "2024-02-01",
+        completedDate: "2024-01-20",
+        description: "Review and confirm your current offer amount",
+        actionType: "navigate",
+        actionTarget: "court",
+        tab: "deal"
       }
     ]
   },
   {
     id: "documents-needed",
-    title: "Documents Needed",
-    icon: "📄",
+    title: "Upload Documents",
+    icon: "📤",
     status: "attention",
     urgency: "high", 
-    description: "Upload required documents for processing",
+    description: "Complete required document uploads",
     items: [
       {
-        id: "drivers-license",
-        title: "Driver License",
-        status: "pending",
+        id: "identity-docs",
+        title: "Identity Verification",
+        status: "completed",
         required: true,
         dueDate: "2024-02-01",
-        description: "Upload a clear photo of your driver's license"
+        completedDate: "2024-01-22",
+        description: "Driver's License, Social Security Letter, W2",
+        actionType: "component",
+        actionTarget: "document-upload"
       },
       {
-        id: "social-security",
-        title: "Social Security Letter",
-        status: "pending", 
-        required: true,
-        dueDate: "2024-02-01",
-        description: "Upload your social security benefits letter"
-      },
-      {
-        id: "ss-cert-w2",
-        title: "S.S Cert/W2",
-        status: "pending",
-        required: true,
-        dueDate: "2024-02-01"
-      },
-      {
-        id: "debt-paperwork",
-        title: "Debt Paperwork", 
+        id: "financial-docs",
+        title: "Financial Documentation",
         status: "pending",
         required: false,
-        dueDate: "2024-02-15"
+        dueDate: "2024-02-15",
+        description: "Debt paperwork, utility bills, bank statements",
+        actionType: "component",
+        actionTarget: "document-upload"
       },
       {
-        id: "utility-bills",
-        title: "Utility Bills",
+        id: "additional-docs",
+        title: "Additional Documents",
         status: "pending",
         required: false,
-        dueDate: "2024-02-15"
-      },
-      {
-        id: "miscellaneous",
-        title: "Miscellaneous",
-        status: "pending",
-        required: false,
-        dueDate: null
+        dueDate: null,
+        description: "Any other supporting documentation",
+        actionType: "component",
+        actionTarget: "document-upload"
       }
     ]
   },
   {
-    id: "payment-insurance",
-    title: "Payment & Insurance Info",
-    icon: "💰",
+    id: "account-management",
+    title: "Account & Payment Setup",
+    icon: "⚙️",
     status: "pending",
     urgency: "medium",
-    description: "Review payment schedule and insurance company details",
+    description: "Manage your account settings and payment information",
     items: [
       {
-        id: "next-payment",
-        title: "Confirm Next Payment Details",
+        id: "payment-verification",
+        title: "Verify Payment Details",
         status: "pending",
         dueDate: "2025-02-10",
-        description: "Verify payment amount and delivery method"
+        description: "Confirm bank account and payment method",
+        actionType: "navigate",
+        actionTarget: "annuity-profile",
+        tab: "payments"
       },
       {
-        id: "payment-method",
-        title: "Update Payment Method",
-        status: "completed",
-        completedDate: "2024-01-20",
-        description: "Direct deposit information verified"
-      },
-      {
-        id: "company-rating",
-        title: "Pacific Life Rating Verified",
-        status: "completed",
-        completedDate: "2024-01-05",
-        description: "A+ Rating confirmed with AM Best"
-      },
-      {
-        id: "payment-calendar",
-        title: "View Full Payment Calendar",
-        status: "available",
-        description: "Access complete payment schedule through 2040"
-      }
-    ]
-  },
-  {
-    id: "personal-documents",
-    title: "Personal & Legal Documents",
-    icon: "📋",
-    status: "pending",
-    urgency: "medium",
-    description: "Manage tax docs, beneficiaries, and legal documents",
-    items: [
-      {
-        id: "tax-free-cert",
-        title: "Tax-Free Status Certificate",
-        status: "available",
-        description: "Download your tax-free status certificate"
-      },
-      {
-        id: "annual-statement",
-        title: "Annual Payment Statement",
-        status: "pending",
-        dueDate: "2025-01-31",
-        description: "2024 annual statement will be available"
-      },
-      {
-        id: "primary-beneficiary",
-        title: "Review Primary Beneficiary",
+        id: "beneficiary-review",
+        title: "Update Beneficiaries",
         status: "completed",
         completedDate: "2024-01-10",
-        description: "Sarah Johnson - Spouse (verified)"
+        description: "Review and update your beneficiary information",
+        actionType: "navigate",
+        actionTarget: "profile",
+        tab: "beneficiaries"
       },
       {
-        id: "contingent-beneficiary",
-        title: "Add Contingent Beneficiary",
-        status: "pending",
-        description: "Consider adding a backup beneficiary"
-      },
-      {
-        id: "settlement-agreement",
-        title: "Settlement Agreement",
-        status: "available",
-        description: "Original settlement agreement document"
-      },
-      {
-        id: "court-order",
-        title: "Court Approval Order",
-        status: "available",
-        description: "Court order approving the settlement"
-      },
-      {
-        id: "assignment-docs",
-        title: "Assignment Documents",
-        status: "available",
-        description: "Payment rights assignment documentation"
+        id: "insurance-review",
+        title: "Insurance Company Info",
+        status: "completed",
+        completedDate: "2024-01-05",
+        description: "Pacific Life A+ rating verified",
+        actionType: "navigate",
+        actionTarget: "annuity-profile",
+        tab: "annuities"
       }
     ]
   },
@@ -217,43 +166,27 @@ export const todoCategories = [
     id: "exclusive-offers",
     title: "Exclusive Client Offers",
     icon: "🎁", 
-    status: "pending",
+    status: "available",
     urgency: "low",
-    description: "Special offers available for settlement clients",
+    description: "Special offers and services for settlement clients",
     items: [
       {
         id: "financial-services",
         title: "Financial Professional Services",
         status: "available",
-        category: "Financial"
+        description: "Connect with certified financial advisors",
+        actionType: "navigate",
+        actionTarget: "rewards",
+        tab: "offers"
       },
       {
         id: "real-estate",
-        title: "Real Estate Investment",
-        status: "available", 
-        category: "Investment"
-      }
-    ]
-  },
-  {
-    id: "report-harassment",
-    title: "Report Harassment/Scams",
-    icon: "⚠️",
-    status: "available",
-    urgency: "medium",
-    description: "Report any suspicious calls or harassment",
-    items: [
-      {
-        id: "report-call",
-        title: "Report Suspicious Call",
+        title: "Real Estate Investment Opportunities",
         status: "available",
-        description: "Report unwanted contact about your settlement"
-      },
-      {
-        id: "scam-education",
-        title: "Scam Prevention Tips",
-        status: "available",
-        description: "Learn how to identify settlement scams"
+        description: "Exclusive real estate investment programs",
+        actionType: "navigate",
+        actionTarget: "rewards",
+        tab: "offers"
       }
     ]
   }

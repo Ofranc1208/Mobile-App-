@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { dealInfo, courtInfo } from '../data/mockData';
 
-const CourtInfoScreen = ({ onNavigate, onBack }) => {
-  const [activeTab, setActiveTab] = useState('court'); // 'court', 'deal', or 'history'
+const CourtInfoScreen = ({ onNavigate, onBack, initialTab }) => {
+  const [activeTab, setActiveTab] = useState(initialTab || 'court'); // 'court', 'deal', or 'history'
 
   return (
     <div className="min-h-screen bg-background-main">

@@ -11,14 +11,16 @@ import MyRewardsScreen from './screens/MyRewardsScreen';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentScreen, setCurrentScreen] = useState('dashboard');
+  const [navigationOptions, setNavigationOptions] = useState(null);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
     setCurrentScreen('dashboard');
   };
 
-  const navigateToScreen = (screenName) => {
+  const navigateToScreen = (screenName, options = null) => {
     setCurrentScreen(screenName);
+    setNavigationOptions(options);
   };
 
   const navigateToDashboard = () => {
@@ -60,6 +62,7 @@ function App() {
         <CourtInfoScreen 
           onNavigate={navigateToScreen} 
           onBack={navigateToDashboard}
+          initialTab={navigationOptions?.tab}
         />
       );
     case 'rewards':
