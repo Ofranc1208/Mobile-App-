@@ -1,2 +1,1 @@
-// App constants will go here
-export {};
+export * from './theme';

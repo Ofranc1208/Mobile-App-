@@ -1,5 +1,5 @@
 // Strongly-typed mock data and helpers used by services and screens
-import { Achievement, AnnuityData, DealInfo, Document, RewardsData, SupportInfo, TodoCategory, TodoItem, User } from '../types';
+import { Achievement, AnnuityData, DealInfo, Document, PayoutData, RewardsData, SupportInfo, TodoCategory, TodoItem, User } from '../types';
 
 // Helpers
 export const simulateNetworkDelay = (minMs: number = 200, maxMs: number = 600): Promise<void> => {
@@ -35,20 +35,20 @@ export const mockUsers: User[] = [
 ];
 
 // Payout (Dashboard) Data
-export const mockPayoutData = [
+export const mockPayoutData: PayoutData[] = [
   {
     id: 'payout_001',
     userId: 'user_001',
-    totalAmount: 1000000,
-    paidAmount: 250000,
-    remainingAmount: 750000,
+    totalAmount: 26525.32,
+    paidAmount: 6525.32,
+    remainingAmount: 20000.00,
     nextPaymentDate: '2024-09-15',
-    paymentFrequency: 'monthly' as const,
-    status: 'active' as const,
+    paymentFrequency: 'monthly',
+    status: 'active',
     startDate: '2024-01-15',
     endDate: '2034-01-15'
   }
-] as const satisfies ReadonlyArray<AnnuityData | any> & any[]; // satisfy TS when imported with different type expectations
+];
 
 // Annuity Data
 export const mockAnnuityData: AnnuityData[] = [

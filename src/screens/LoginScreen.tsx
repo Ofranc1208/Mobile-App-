@@ -11,6 +11,16 @@ import {
   ScrollView,
 } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
+import { Colors, Spacing, BorderRadius, FontSizes, FontWeights, Shadows } from '../constants/theme';
+
+// Logo component similar to the prototype
+const LogoComponent = () => (
+  <View style={styles.logoContainer}>
+    <View style={styles.logoSquare}>
+      <Text style={styles.logoCheckmark}>✓</Text>
+    </View>
+  </View>
+);
 
 const LoginScreen = () => {
   const [clientId, setClientId] = useState('');
@@ -42,9 +52,8 @@ const LoginScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.content}>
           <View style={styles.header}>
-            <Text style={styles.logo}>💰</Text>
-            <Text style={styles.title}>Smarter Payouts</Text>
-            <Text style={styles.subtitle}>Access your settlement information</Text>
+            <LogoComponent />
+            <Text style={styles.title}>Sign In</Text>
           </View>
 
           <View style={styles.form}>
@@ -86,19 +95,9 @@ const LoginScreen = () => {
             </TouchableOpacity>
 
             <View style={styles.helpSection}>
-              <Text style={styles.helpText}>Need help?</Text>
-              <TouchableOpacity>
-                <Text style={styles.helpLink}>Contact Support</Text>
-              </TouchableOpacity>
+              <Text style={styles.helpText}>Need Help?</Text>
+              <Text style={styles.helpPhone}>+1 (866) 972-9688</Text>
             </View>
-          </View>
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              Demo Credentials:{'\n'}
-              Client ID: SP001{'\n'}
-              Password: password123
-            </Text>
           </View>
         </View>
       </ScrollView>
@@ -109,98 +108,104 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: Colors.backgroundMain,
   },
   scrollContainer: {
     flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: Spacing.xxl,
+    paddingVertical: Spacing.massive,
   },
   content: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 60,
-    paddingBottom: 40,
+    justifyContent: 'center',
   },
   header: {
     alignItems: 'center',
-    marginBottom: 48,
+    marginBottom: Spacing.massive,
   },
-  logo: {
-    fontSize: 64,
-    marginBottom: 16,
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: Spacing.xxl,
+  },
+  logoSquare: {
+    width: 80,
+    height: 80,
+    backgroundColor: Colors.brandGreen,
+    borderRadius: BorderRadius.xl,
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...Shadows.lg,
+  },
+  logoCheckmark: {
+    fontSize: FontSizes.huge,
+    color: Colors.white,
+    fontWeight: FontWeights.bold,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: FontSizes.xxxl,
+    fontWeight: FontWeights.bold,
+    color: Colors.textPrimary,
     textAlign: 'center',
   },
   form: {
-    marginBottom: 32,
+    backgroundColor: Colors.white,
+    paddingVertical: Spacing.huge,
+    paddingHorizontal: Spacing.xl,
+    borderRadius: BorderRadius.lg,
+    ...Shadows.md,
+    borderWidth: 1,
+    borderColor: Colors.gray200,
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: Spacing.xl,
   },
   label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
-    marginBottom: 8,
+    fontSize: FontSizes.md,
+    fontWeight: FontWeights.medium,
+    color: Colors.gray700,
+    marginBottom: Spacing.sm,
   },
   input: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: '#E1E5E9',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    fontSize: 16,
-    color: '#1A1A1A',
+    borderColor: Colors.gray300,
+    borderRadius: BorderRadius.md,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.lg,
+    fontSize: FontSizes.md,
+    color: Colors.textPrimary,
   },
   loginButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 12,
-    paddingVertical: 16,
+    backgroundColor: Colors.success,
+    borderRadius: BorderRadius.lg,
+    paddingVertical: Spacing.lg,
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: Spacing.sm,
   },
   loginButtonDisabled: {
-    backgroundColor: '#B0B0B0',
+    backgroundColor: Colors.gray400,
   },
   loginButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: '600',
+    color: Colors.white,
+    fontSize: FontSizes.lg,
+    fontWeight: FontWeights.bold,
   },
   helpSection: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: Spacing.xxl,
   },
   helpText: {
-    fontSize: 14,
-    color: '#666',
-    marginRight: 4,
-  },
-  helpLink: {
-    fontSize: 14,
-    color: '#007AFF',
-    fontWeight: '600',
-  },
-  footer: {
-    alignItems: 'center',
-    marginTop: 'auto',
-  },
-  footerText: {
-    fontSize: 12,
-    color: '#999',
+    fontSize: FontSizes.sm,
+    color: Colors.gray600,
     textAlign: 'center',
-    lineHeight: 18,
+  },
+  helpPhone: {
+    fontSize: FontSizes.md,
+    color: Colors.brandGreen,
+    fontWeight: FontWeights.medium,
+    textAlign: 'center',
+    marginTop: Spacing.xs,
   },
 });
 

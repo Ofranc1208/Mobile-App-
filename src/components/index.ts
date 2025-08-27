@@ -1,2 +1,1 @@
-// Component exports will go here
-export {};
+export { default as RadialMenu } from './RadialMenu';

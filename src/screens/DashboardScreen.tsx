@@ -10,6 +10,8 @@ import {
 import { useAuth } from '../contexts/AuthContext';
 import { mockPayoutData, mockAnnuityData, mockDealInfo } from '../__mocks__/mockData';
 import { PayoutData, AnnuityData, DealInfo } from '../types';
+import { Colors, Spacing, BorderRadius, FontSizes, FontWeights, Shadows } from '../constants/theme';
+import RadialMenu from '../components/RadialMenu';
 
 const DashboardScreen = () => {
   const { user, logout } = useAuth();
@@ -30,15 +32,10 @@ const DashboardScreen = () => {
     }
   }, [user]);
 
-  const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Logout', onPress: logout, style: 'destructive' },
-      ]
-    );
+  const handleNavigate = (screen: string) => {
+    // In a real app, you would use navigation here
+    console.log('Navigate to:', screen);
+    Alert.alert('Navigation', `Would navigate to ${screen} screen`);
   };
 
   const formatCurrency = (amount: number) => {
@@ -48,252 +45,211 @@ const DashboardScreen = () => {
     }).format(amount);
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
-  };
-
   if (!user) {
     return (
-      <View style={styles.container}>
+      <View style={styles.loadingContainer}>
         <Text>Loading...</Text>
       </View>
     );
   }
 
+  const totalAmount = payoutData?.totalAmount || 26525.32;
+
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+      {/* Top Section - User Info with brand yellow background */}
       <View style={styles.header}>
-        <View>
-          <Text style={styles.welcomeText}>Welcome back,</Text>
-          <Text style={styles.userName}>{user.firstName} {user.lastName}</Text>
-          <Text style={styles.clientId}>Client ID: {user.clientId}</Text>
+        <View style={styles.userInfo}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarIcon}>👤</Text>
+          </View>
+          <Text style={styles.userId}>ID {user.clientId}</Text>
         </View>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutButtonText}>Logout</Text>
+        <TouchableOpacity style={styles.notificationButton}>
+          <Text style={styles.notificationIcon}>🔔</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Payout Summary Card */}
-      {payoutData && (
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Payout Summary</Text>
-          <View style={styles.payoutGrid}>
-            <View style={styles.payoutItem}>
-              <Text style={styles.payoutLabel}>Total Amount</Text>
-              <Text style={styles.payoutValue}>{formatCurrency(payoutData.totalAmount)}</Text>
-            </View>
-            <View style={styles.payoutItem}>
-              <Text style={styles.payoutLabel}>Paid Amount</Text>
-              <Text style={styles.payoutValue}>{formatCurrency(payoutData.paidAmount)}</Text>
-            </View>
-            <View style={styles.payoutItem}>
-              <Text style={styles.payoutLabel}>Remaining</Text>
-              <Text style={styles.payoutValue}>{formatCurrency(payoutData.remainingAmount)}</Text>
-            </View>
-            <View style={styles.payoutItem}>
-              <Text style={styles.payoutLabel}>Next Payment</Text>
-              <Text style={styles.payoutValue}>{formatDate(payoutData.nextPaymentDate)}</Text>
-            </View>
+      {/* Main Content Area */}
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Payout Section */}
+        <View style={styles.payoutSection}>
+          <Text style={styles.payoutLabel}>My Payout</Text>
+          <View style={styles.payoutCard}>
+            <Text style={styles.payoutAmount}>{formatCurrency(totalAmount)}</Text>
           </View>
         </View>
-      )}
 
-      {/* Quick Actions */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Quick Actions</Text>
-        <View style={styles.quickActions}>
-          <TouchableOpacity style={styles.actionButton}>
-            <Text style={styles.actionIcon}>📋</Text>
-            <Text style={styles.actionText}>View To-Do</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
-            <Text style={styles.actionIcon}>📄</Text>
-            <Text style={styles.actionText}>Upload Documents</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
-            <Text style={styles.actionIcon}>📞</Text>
-            <Text style={styles.actionText}>Contact Support</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
-            <Text style={styles.actionIcon}>🏆</Text>
-            <Text style={styles.actionText}>View Rewards</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        {/* Radial Menu */}
+        <RadialMenu onNavigate={handleNavigate} daysToFund={23} />
 
-      {/* Recent Activity */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Recent Activity</Text>
-        <View style={styles.activityItem}>
-          <Text style={styles.activityIcon}>✅</Text>
-          <View style={styles.activityContent}>
-            <Text style={styles.activityText}>Document uploaded successfully</Text>
-            <Text style={styles.activityTime}>2 hours ago</Text>
+        {/* Status Section */}
+        <View style={styles.statusSection}>
+          <Text style={styles.statusLabel}>Status</Text>
+          <View style={styles.progressContainer}>
+            <View style={[styles.progressStep, styles.progressStepActive]} />
+            <View style={styles.progressLine} />
+            <View style={styles.progressStep} />
+            <View style={styles.progressLine} />
+            <View style={styles.progressStep} />
+            <View style={styles.progressLine} />
+            <View style={styles.progressStep} />
+          </View>
+          <View style={styles.progressLabels}>
+            <Text style={[styles.progressLabel, styles.progressLabelActive]}>Step 1</Text>
+            <Text style={styles.progressLabel}>Step 2</Text>
+            <Text style={styles.progressLabel}>Step 3</Text>
+            <Text style={styles.progressLabel}>Complete</Text>
           </View>
         </View>
-        <View style={styles.activityItem}>
-          <Text style={styles.activityIcon}>📅</Text>
-          <View style={styles.activityContent}>
-            <Text style={styles.activityText}>Payment scheduled for next month</Text>
-            <Text style={styles.activityTime}>1 day ago</Text>
-          </View>
-        </View>
-        <View style={styles.activityItem}>
-          <Text style={styles.activityIcon}>🎯</Text>
-          <View style={styles.activityContent}>
-            <Text style={styles.activityText}>Achievement unlocked: First Steps</Text>
-            <Text style={styles.activityTime}>3 days ago</Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Contact Information */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Need Help?</Text>
-        <View style={styles.contactInfo}>
-          <Text style={styles.contactText}>📞 Support: +1 (866) 972-9688</Text>
-          <Text style={styles.contactText}>📧 Email: support@smarterpayouts.com</Text>
-          <Text style={styles.contactText}>🕒 Hours: Mon-Fri 9AM-6PM EST</Text>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: Colors.backgroundMain,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.backgroundMain,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: Spacing.xl,
     paddingTop: 60,
-    paddingBottom: 20,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E1E5E9',
+    paddingBottom: Spacing.xl,
+    backgroundColor: Colors.brandYellow,
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.orange200,
+    ...Shadows.md,
   },
-  welcomeText: {
-    fontSize: 14,
-    color: '#666',
-  },
-  userName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-    marginBottom: 4,
-  },
-  clientId: {
-    fontSize: 12,
-    color: '#999',
-  },
-  logoutButton: {
-    backgroundColor: '#FF3B30',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 8,
-  },
-  logoutButtonText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    marginHorizontal: 20,
-    marginTop: 20,
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
-    marginBottom: 16,
-  },
-  payoutGrid: {
+  userInfo: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  payoutItem: {
-    width: '48%',
-    marginBottom: 16,
+  avatar: {
+    width: 56,
+    height: 56,
+    backgroundColor: Colors.gray600,
+    borderRadius: BorderRadius.full,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: Spacing.lg,
+    borderWidth: 2,
+    borderColor: Colors.white,
+    ...Shadows.lg,
+  },
+  avatarIcon: {
+    fontSize: FontSizes.xxl,
+    color: Colors.white,
+  },
+  userId: {
+    fontSize: FontSizes.lg,
+    fontWeight: FontWeights.bold,
+    color: Colors.gray800,
+  },
+  notificationButton: {
+    width: 40,
+    height: 40,
+    backgroundColor: Colors.brandRed,
+    borderRadius: BorderRadius.full,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: Colors.white,
+    ...Shadows.lg,
+  },
+  notificationIcon: {
+    fontSize: FontSizes.lg,
+    color: Colors.white,
+  },
+  content: {
+    flex: 1,
+    backgroundColor: Colors.backgroundMain,
+  },
+  payoutSection: {
+    alignItems: 'center',
+    paddingTop: Spacing.xl,
+    paddingHorizontal: Spacing.xxl,
+    marginBottom: Spacing.sm,
   },
   payoutLabel: {
-    fontSize: 12,
-    color: '#666',
-    marginBottom: 4,
+    fontSize: FontSizes.lg,
+    fontWeight: FontWeights.medium,
+    color: Colors.gray700,
+    marginBottom: Spacing.md,
   },
-  payoutValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1A1A1A',
+  payoutCard: {
+    borderWidth: 2,
+    borderColor: Colors.gray300,
+    borderRadius: BorderRadius.xl,
+    paddingVertical: Spacing.lg,
+    paddingHorizontal: Spacing.xxl,
+    backgroundColor: Colors.white,
+    ...Shadows.md,
   },
-  quickActions: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  actionButton: {
-    width: '48%',
-    backgroundColor: '#F8F9FA',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  actionIcon: {
-    fontSize: 24,
-    marginBottom: 8,
-  },
-  actionText: {
-    fontSize: 12,
-    color: '#1A1A1A',
+  payoutAmount: {
+    fontSize: FontSizes.giant,
+    fontWeight: FontWeights.bold,
+    color: Colors.success,
     textAlign: 'center',
   },
-  activityItem: {
+  statusSection: {
+    alignItems: 'center',
+    paddingHorizontal: Spacing.xxl,
+    paddingTop: Spacing.xl,
+    paddingBottom: Spacing.huge,
+  },
+  statusLabel: {
+    fontSize: FontSizes.md,
+    fontWeight: FontWeights.semibold,
+    color: Colors.gray700,
+    marginBottom: Spacing.xxl,
+  },
+  progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: Spacing.lg,
   },
-  activityIcon: {
-    fontSize: 20,
-    marginRight: 12,
+  progressStep: {
+    width: 16,
+    height: 16,
+    backgroundColor: Colors.gray300,
+    borderRadius: BorderRadius.full,
+    ...Shadows.sm,
   },
-  activityContent: {
-    flex: 1,
+  progressStepActive: {
+    backgroundColor: Colors.success,
+    ...Shadows.md,
   },
-  activityText: {
-    fontSize: 14,
-    color: '#1A1A1A',
-    marginBottom: 2,
+  progressLine: {
+    width: 48,
+    height: 6,
+    backgroundColor: Colors.gray300,
+    borderRadius: BorderRadius.full,
+    marginHorizontal: 0,
   },
-  activityTime: {
-    fontSize: 12,
-    color: '#999',
+  progressLabels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    maxWidth: 300,
   },
-  contactInfo: {
-    gap: 8,
+  progressLabel: {
+    fontSize: FontSizes.sm,
+    fontWeight: FontWeights.medium,
+    color: Colors.gray600,
   },
-  contactText: {
-    fontSize: 14,
-    color: '#666',
+  progressLabelActive: {
+    color: Colors.success,
+    fontWeight: FontWeights.semibold,
   },
 });
 
