@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LoginScreen from './screens/LoginScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import TodoListScreen from './screens/TodoListScreen';
@@ -7,11 +7,21 @@ import PersonalInformationScreen from './screens/PersonalInformationScreen';
 import SupportScreen from './screens/SupportScreen';
 import CourtInfoScreen from './screens/CourtInfoScreen';
 import MyRewardsScreen from './screens/MyRewardsScreen';
+import CRMDataInputScreen from './screens/CRMDataInputScreen';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentScreen, setCurrentScreen] = useState('dashboard');
   const [navigationOptions, setNavigationOptions] = useState(null);
+
+  // Check URL for direct navigation
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'crm') {
+      setIsLoggedIn(true);
+      setCurrentScreen('crm');
+    }
+  }, []);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -75,6 +85,13 @@ function App() {
     case 'support':
       return (
         <SupportScreen 
+          onNavigate={navigateToScreen} 
+          onBack={navigateToDashboard}
+        />
+      );
+    case 'crm':
+      return (
+        <CRMDataInputScreen 
           onNavigate={navigateToScreen} 
           onBack={navigateToDashboard}
         />
